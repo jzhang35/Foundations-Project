@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tester Page</title>
+</head>
+<body onload = "getDefects()">
+    <p>Tester Page</p>
+
+<table id = "table">
+    
+</table>
+
+<select id = "select" type = "text" placeholder = "Defect"></select>
+
+<select id = "accept-or-decline">
+    <option value = "Accepted">Accepted</option>
+    <option value = "Declined">Declined</option>
+</select>
+
+<button id = "updateDefects" onclick = "updateDefects()">Update defects</button>>
+
+</body>
+    <script>
+
+const table = document.getElementById("table");
+const selectHere = document.getElementById("accept-or-decline");
+const inputDefect = document.getElementById("input");
+
+
+async function updateDefects(){
+
+let updateInfo = {
+        status: selectHere.value
+        }
+
+        // now that I have the login information I need to convert it into a JSON
+        let updateInfoJSON = JSON.stringify(updateInfo);
+
+        // now I can set up my HTTP request configurations
+        let config = {
+            method:"PATCH", // method is a reference to the kind of request you are making (the verb): GET is the default
+            headers:{'Content-Type':"application/json"}, // some APIs will return an error message without this value included
+            body: updateInfoJSON
+        }
+
+        let httpResponse = await fetch("https://bugcatcher.coe.revaturelabs.com/12/defects/${defectID.value}", config);
+        console.log(httpResponse.status)
+        if(httpResponse.status === 204){
+            if(selectHere.value === "Accepted"){
+alert("Defect accepted")
+} else if (selectHere.value === "Declined"){
+    alert("Defect declined")
+}
+        }
+
+    }
+
+    async function getDefects(){
+        // to let my api validate login information I need to attach the username and password to the http request
+        
+        let httpResponse = await fetch("https://bugcatcher.coe.revaturelabs.com/12/defects");
+        console.log(httpResponse)
+        let responseBody = await httpResponse.json();
+
+        const table = document.getElementById("table");
+
+if(httpResponse.status === 200){
+
+    let hd = document.createElement("th");
+    hd.innerHTML = `<th>Defect ID</th>
+                    <th>Assigned To</th>
+                    <th>Description</th>
+                    <th>Status</th>`;
+
+    table.appendChild(hd);
+
+for(let name of responseBody){
+    console.log(name.stepsToReproduce)
+    let tr = document.createElement("tr")
+    tr.innerHTML = 
+    `
+    <td>${name.defectId}</td>
+    <td>${name.assignedTo}</td>
+    <td>${name.desc}</td>
+    <td>${name.status}</td>
+    <td><select id = "selector${name.defectId}"></select></td>
+    <td>
+    `
+    table.appendChild(tr);
+
+
+}
+
+let defectMenu = document.createElement("defectMenu")
+defectMenu.innerHTML = 
+`
+<select name="Defect" id="select">
+    <option value="option">--Please choose an option--</option>
+    <option value="101">${name.defectId}</option>
+    <option value="86244">${name.defectId}</option>
+    <option value="12358">${name.defectId}</option>
+    <option value="63252">${name.defectId}</option>
+    <option value="53398">${name.defectId}</option>
+    <option value="65380">${name.defectId}</option>
+</select>
+`
+
+}
+
+    }
+
+</script>
+</html>

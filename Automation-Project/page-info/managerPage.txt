@@ -1,0 +1,11 @@
+Manager Page
+
+FEATURE: Manager should be able to specify the particular defect name and the tester
+
+SCENARIO: As a manager I want to specify the particular header and the tester
+
+GiVEN   the manager is on the manager page
+WHEN   the manager enters the defect name
+WHEN   the manager enters the tester name
+WHEN   the manager clicks the assign button
+THEN   the defect and the tester will be specified

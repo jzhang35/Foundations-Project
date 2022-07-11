@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tester Page</title>
+</head>
+<body onload = "getDefects()">
+<select id = "defects"></select>
+    <select id = "status"></select>
+    <button id = "update">Update</button>
+</body>
+
+<script>
+    async function getDefects(){
+        
+            let httpResponse = await fetch("https://bugcatcher.coe.revaturelabs.com/12/defects");
+        console.log(httpResponse)
+        let responseBody = await httpResponse.json();
+
+        const table = document.getElementById("table");
+    }
+</script>
+</html>
